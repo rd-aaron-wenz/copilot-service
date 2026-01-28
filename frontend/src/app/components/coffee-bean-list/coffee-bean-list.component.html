@@ -1,0 +1,55 @@
+<div class="container">
+  <h1>Coffee Bean Manager</h1>
+  
+  <div class="form-section">
+    <h2>{{ selectedBean ? 'Edit Coffee Bean' : 'Add New Coffee Bean' }}</h2>
+    <app-coffee-bean-form 
+      [coffeeBean]="selectedBean"
+      (beanSaved)="onBeanSaved()"
+      (cancelled)="cancelEdit()">
+    </app-coffee-bean-form>
+  </div>
+
+  <div class="list-section">
+    <h2>Coffee Beans Collection</h2>
+    
+    <div *ngIf="coffeeBeans.length === 0" class="empty-message">
+      No coffee beans found. Add your first one above!
+    </div>
+
+    <div class="coffee-grid">
+      <div *ngFor="let bean of coffeeBeans" class="coffee-card">
+        <div class="card-header">
+          <h3>{{ bean.name }}</h3>
+          <div class="rating">
+            <span class="stars">{{ '★'.repeat(bean.rating) }}{{ '☆'.repeat(5 - bean.rating) }}</span>
+            <span class="rating-value">{{ bean.rating }}/5</span>
+          </div>
+        </div>
+        
+        <div class="card-body">
+          <p><strong>Origin:</strong> {{ bean.origin }}</p>
+          <p><strong>Roast Level:</strong> {{ bean.roastLevel }}</p>
+          <p *ngIf="bean.description"><strong>Description:</strong> {{ bean.description }}</p>
+        </div>
+
+        <div class="card-footer">
+          <div class="rating-controls">
+            <label>Rate:</label>
+            <button *ngFor="let star of [1,2,3,4,5]" 
+                    (click)="updateRating(bean, star)"
+                    [class.active]="star <= bean.rating">
+              {{ star }}★
+            </button>
+          </div>
+          
+          <div class="actions">
+            <button class="btn-edit" (click)="selectBean(bean)">Edit</button>
+            <button class="btn-delete" (click)="deleteCoffeeBean(bean.id)">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
