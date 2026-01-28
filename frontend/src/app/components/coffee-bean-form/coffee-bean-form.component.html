@@ -1,0 +1,68 @@
+<form (ngSubmit)="onSubmit()" class="coffee-form">
+  <div class="form-group">
+    <label for="name">Coffee Name *</label>
+    <input 
+      type="text" 
+      id="name" 
+      [(ngModel)]="formData.name" 
+      name="name" 
+      required
+      placeholder="e.g., Ethiopian Yirgacheffe">
+  </div>
+
+  <div class="form-group">
+    <label for="origin">Origin *</label>
+    <input 
+      type="text" 
+      id="origin" 
+      [(ngModel)]="formData.origin" 
+      name="origin" 
+      required
+      placeholder="e.g., Ethiopia">
+  </div>
+
+  <div class="form-group">
+    <label for="roastLevel">Roast Level *</label>
+    <select 
+      id="roastLevel" 
+      [(ngModel)]="formData.roastLevel" 
+      name="roastLevel" 
+      required>
+      <option *ngFor="let level of roastLevels" [value]="level">{{ level }}</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="rating">Initial Rating *</label>
+    <input 
+      type="number" 
+      id="rating" 
+      [(ngModel)]="formData.rating" 
+      name="rating" 
+      min="1" 
+      max="5" 
+      required>
+    <small>Rate from 1 to 5 stars</small>
+  </div>
+
+  <div class="form-group">
+    <label for="description">Description</label>
+    <textarea 
+      id="description" 
+      [(ngModel)]="formData.description" 
+      name="description"
+      rows="3"
+      placeholder="Describe the flavor profile, notes, etc.">
+    </textarea>
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" class="btn-submit">
+      {{ coffeeBean ? 'Update' : 'Add' }} Coffee Bean
+    </button>
+    <button type="button" class="btn-cancel" (click)="onCancel()" *ngIf="coffeeBean">
+      Cancel
+    </button>
+  </div>
+</form>
+
